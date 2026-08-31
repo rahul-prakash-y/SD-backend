@@ -3,7 +3,8 @@
  * Seeds MongoDB with the same demo data used in the frontend localStorage.
  * Run: npm run seed
  */
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const connectDB = require('../config/db');

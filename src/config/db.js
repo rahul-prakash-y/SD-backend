@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+console.log('MONGO_URI from env:', process.env.MONGO_URI);
 
 /**
  * Connect to MongoDB with optimized connection pooling.

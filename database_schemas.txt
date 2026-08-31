@@ -1,0 +1,173 @@
+=========================================
+      DATABASE SCHEMA TABLES (DEMO)
+=========================================
+
+1. User
+-----------------------------------------
+- _id             (ObjectId)
+- username        (String) [unique]
+- email           (String) [unique]
+- password        (String) [hidden]
+- name            (String)
+- role            (String) [enum: student, teacher, admin]
+- avatar          (String)
+- phone           (String)
+- joinedDate      (String)
+[Student Fields]:
+  - studentId       (String)
+  - rollNo          (String)
+  - grade           (String)
+  - section         (String)
+  - semester        (String)
+  - department      (String)
+  - mentorName      (String)
+  - mentorId        (String)
+  - mentorPhone     (String)
+  - residenceType   (String) [enum: Day Scholar, Hosteler, null]
+  - busRoute        (String)
+  - busNumber       (String)
+  - busStop         (String)
+  - hostelName      (String)
+  - roomNumber      (String)
+  - gpa             (Number)
+  - attendanceRate  (Number)
+  - guardianName    (String)
+  - guardianContact (String)
+  - bloodGroup      (String)
+  - academicYear    (String)
+[Teacher Fields]:
+  - title           (String)
+  - subjectsTaught  (Array of Strings)
+  - employeeId      (String)
+  - officeHours     (String)
+- createdAt       (Date)
+- updatedAt       (Date)
+
+
+2. Course
+-----------------------------------------
+- _id                 (ObjectId)
+- code                (String) [unique]
+- title               (String)
+- teacherId           (ObjectId -> ref: User)
+- teacherName         (String)
+- schedule            (String)
+- room                (String)
+- credits             (Number)
+- color               (String)
+- iconName            (String)
+- description         (String)
+- totalStudents       (Number)
+- syllabusProgress    (Number)
+- studyMaterialsCount (Number)
+- createdAt           (Date)
+- updatedAt           (Date)
+
+
+3. Announcement
+-----------------------------------------
+- _id             (ObjectId)
+- authorId        (ObjectId -> ref: User)
+- authorName      (String)
+- authorRole      (String)
+- authorAvatar    (String)
+- title           (String)
+- content         (String)
+- date            (String)
+- priority        (String) [enum: normal, important, urgent]
+- targetCourse    (String)
+- createdAt       (Date)
+- updatedAt       (Date)
+
+
+4. AttendanceRecord
+-----------------------------------------
+- _id             (ObjectId)
+- date            (String)
+- courseId        (ObjectId -> ref: Course)
+- studentId       (ObjectId -> ref: User)
+- studentName     (String)
+- studentRoll     (String)
+- status          (String) [enum: present, absent, late, excused]
+- notes           (String)
+- createdAt       (Date)
+- updatedAt       (Date)
+
+
+5. ChangeRequest
+-----------------------------------------
+- _id             (ObjectId)
+- studentId       (ObjectId -> ref: User)
+- studentName     (String)
+- teacherId       (ObjectId -> ref: User)
+- teacherName     (String)
+- description     (String)
+- status          (String) [enum: pending, resolved]
+- timestamp       (String)
+- createdAt       (Date)
+- updatedAt       (Date)
+
+
+6. Notification
+-----------------------------------------
+- _id             (ObjectId)
+- title           (String)
+- message         (String)
+- timestamp       (String)
+- read            (Boolean)
+- type            (String) [enum: grade, announcement, attendance]
+- roleTarget      (String) [enum: student, teacher, all]
+- userId          (ObjectId -> ref: User) [optional]
+- createdAt       (Date)
+- updatedAt       (Date)
+
+
+7. StudentResult
+-----------------------------------------
+- _id             (ObjectId)
+- studentId       (ObjectId -> ref: User)
+- studentName     (String)
+- rollNo          (String)
+- department      (String)
+- currentSemester (String)
+- cgpa            (Number)
+- publishedDate   (String)
+- academicYear    (String)
+- semesters       (Map) -> {
+    semester: (String)
+    sgpa: (Number)
+    status: (String) [enum: Pass, Fail]
+    grades: Array [{ courseId, courseName, courseCode, credits, gradeLetter, percentage, gpaPoint, teacherName, remarks }]
+  }
+- hallTicket      (Object) -> {
+    hallTicketNo: (String)
+    registerNumber: (String)
+    programme: (String)
+    semester: (String)
+    candidateName: (String)
+    dob: (String)
+    examCenter: (String)
+    seatNo: (String)
+    examDates: (String)
+    candidatePhoto: (String)
+    subjects: Array [{ subjectCode, subjectName }]
+    status: (String) [enum: Issued, Pending]
+    publishedDate: (String)
+  }
+- createdAt       (Date)
+- updatedAt       (Date)
+
+
+8. TimetableSlot
+-----------------------------------------
+- _id             (ObjectId)
+- day             (String) [enum: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+- startTime       (String)
+- endTime         (String)
+- subject         (String)
+- teacher         (String)
+- room            (String)
+- color           (String)
+- badge           (String)
+- createdAt       (Date)
+- updatedAt       (Date)
